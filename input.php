@@ -1,4 +1,5 @@
 <?php include_once('includes/header.php'); ?>
+
     <body style='padding-top:25px;'>
         <div class="container-fluid">
             <section class='col-md-6'>
@@ -12,7 +13,7 @@
                     }
     
                 ?>
-                <form name="restaurants" id='restaurants' action="process.php" method="post">
+                <form name="restaurants" id='restaurants' action="#" method="post">
                     <label for='restaurantName' class='col-md-6'>Restaurant Name:</label>
                     <input type='text' id='restaurantName' class='col-md-6'
                     required='required' name='restaurantName' placeholder='Restaurant name'
@@ -30,7 +31,7 @@
                     />
                     <p>&nbsp;</p>
                     <span style='font-weight:bold;'>Describe your experience:</span><br/>
-                    <textarea name='description' id='description' col='5' class='col-md-12' placeholder='Describe the location'>
+                    <textarea name='description' id='description' cols='5' row='4' class='col-md-12' placeholder='Describe the location'>
                     
                     </textarea>
                     <p>&nbsp;</p>
@@ -38,7 +39,7 @@
                 </form>
             <pre style='margin-top:10px;'>
             <?php 
-        isset($_POST) && !empty($_POST)? print_r($_POST) : print("No variables have been set yet.");
+        isset($_POST) && !empty($_POST) ? print_r($_POST) : print("No variables have been set yet.");
          
         ?>
         </pre>

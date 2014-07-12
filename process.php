@@ -6,15 +6,18 @@ ini_set('display_startup_errors', 1);
  
 $_POST = array_map('trim', $_POST);
 // PHP May try to encode values that are not JSON encodable.  STRIP them out.
+
+$errors = array();
+
 $json_options = 'JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT';
 $sanitizeStringOptions = 'FILTER_FLAG_NO_ENCODE_QUOTES | FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH';   
 
-isset($_POST['restaurantName']) ? $restaurantName = filter_var($_POST['restaurantName'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)  : $restaurantName = null;
-isset($_POST['rating']) ? $rating = filter_var($_POST['rating'], FILTER_SANITIZE_NUMBER_INT) : $rating = null;
-isset($_POST['location']) ? $location = filter_var($_POST['location'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)   : $location = null;
-isset($_POST['description']) ? $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING, $sanitizeStringOptions) : $description = 'No description given.';
+isset($_POST['restaurantName']) ? $_POST['restaurantName'] = filter_var($_POST['restaurantName'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)  : $errors[] = 'No Restaurant Name Given.';
+isset($_POST['rating']) ? $_POST['rating'] = filter_var($_POST['rating'], FILTER_SANITIZE_NUMBER_INT) : $errors[] = "No rating given.";
+isset($_POST['location']) ? $_POST['location'] = filter_var($_POST['location'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)   : $errors[] = null;
+isset($_POST['description']) ? $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING, $sanitizeStringOptions) : $_POST['description'] = 'No description given.';
 
-if(!is_null($restaurantName) && !is_null($rating) && !is_null($location)){
+if(empty($errors)){
     // JSON encode will convert the input into a JavaScript Object.
     
     $storage = 'storage/restaurant.json';
