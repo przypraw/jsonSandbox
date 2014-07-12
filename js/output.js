@@ -9,30 +9,32 @@ $.ajax({
     var descriptionContainer = '<blockquote></blockquote>';
     var json = data;
     console.dir(json);
+    
     var name = json.restaurantName;
     var rating = json.rating;
     var location = json.location;
     var description = json.description;
     var forKey,forValue;
     var container = $('#container');
+    
     if(typeof json.restaurantName === 'string'){
         forKey = $(divKey).text('Restaurant Name:');
         container.append(forKey);
-        forValue = $(divValue).text(name);
+        forValue = $(divValue).html(name);
         container.append(forValue);
         
         forKey = $(divKey).text('Restaurant Rating: ');
         container.append(forKey);
-        forValue = $(divValue).text(rating);
+        forValue = $(divValue).html(rating);
         container.append(forValue);
         
         forKey = $(divKey).text('Restaurant Location: ');
         container.append(forKey);
-        forValue = $(divValue).text(location);
+        forValue = $(divValue).html(location);
         container.append(forValue);
         container.append('<p class="clearfix">&nbsp;</p>');
         
-        forValue = $(descriptionContainer).text(description);
+        forValue = $(descriptionContainer).html(description);
         container.append('<span style="font-weight: bold;color:#46b8da;">User Experience: </span>');
         container.append(forValue);
         return false;
@@ -43,21 +45,21 @@ $.ajax({
     for(var i = 0; i<rating.length;i++){
         forKey = $(divKey).text('Restaurant Name:');
         container.append(forKey);
-        forValue = $(divValue).text(name[i]);
+        forValue = $(divValue).html(name[i]);
         container.append(forValue);
         
         forKey = $(divKey).text('Restaurant Rating: ');
         container.append(forKey);
-        forValue = $(divValue).text(rating[i]);
+        forValue = $(divValue).html(rating[i]);
         container.append(forValue);
         
         forKey = $(divKey).text('Restaurant Location: ');
         container.append(forKey);
-        forValue = $(divValue).text(location[i]);
+        forValue = $(divValue).html(location[i]);
         container.append(forValue);
         container.append('<p class="clearfix">&nbsp;</p>');
         
-        forValue = $(descriptionContainer).text(description[i]);
+        forValue = $(descriptionContainer).html(description[i]);
         container.append('<span style="font-weight: bold;color:#46b8da;">User Experience: </span>');
         container.append(forValue);
         

@@ -7,6 +7,7 @@ ini_set('display_startup_errors', 1);
 $_POST = array_map('trim', $_POST);
 // PHP May try to encode values that are not JSON encodable.  STRIP them out.
 
+
 $errors = array();
 
 $json_options = 'JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT';
@@ -50,8 +51,9 @@ if(empty($errors)){
     foreach($errors as $error){
         $error .= $error;
     }
+    
     $error = urlencode($error);
-    header("Location: input.php?error="+$error);
+    header("Location: input.php?error=$error");
 }
 
 
