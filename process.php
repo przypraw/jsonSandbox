@@ -14,18 +14,17 @@ $sanitizeStringOptions = 'FILTER_FLAG_NO_ENCODE_QUOTES | FILTER_FLAG_STRIP_LOW |
 
 isset($_POST['restaurantName']) ? $_POST['restaurantName'] = filter_var($_POST['restaurantName'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)  : $errors[] = 'No Restaurant Name Given.';
 isset($_POST['rating']) ? $_POST['rating'] = filter_var($_POST['rating'], FILTER_SANITIZE_NUMBER_INT) : $errors[] = "No rating given.";
-isset($_POST['location']) ? $_POST['location'] = filter_var($_POST['location'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)   : $errors[] = null;
-isset($_POST['description']) ? $description = filter_var($_POST['description'], FILTER_SANITIZE_STRING, $sanitizeStringOptions) : $_POST['description'] = 'No description given.';
+isset($_POST['location']) ? $_POST['location'] = filter_var($_POST['location'], FILTER_SANITIZE_STRING, $sanitizeStringOptions)   : $errors[] = 'No location given';
+isset($_POST['description']) ? $_POST['description'] = filter_var($_POST['description'], FILTER_SANITIZE_STRING, $sanitizeStringOptions) : $_POST['description'] = 'No description given.';
 
 if(empty($errors)){
-    // JSON encode will convert the input into a JavaScript Object.
-    
     $storage = 'storage/restaurant.json';
     
     if(!file_exists($storage)){
         touch($storage);
         $json = json_encode($_POST);
         // Touch will create the file if it does not exist.
+        // JSON encode will convert the input into a JavaScript Object.
     }else{
         // By default, you cannot append new data to a JSON and have it parse as valid.
         // You have to unencode and then re-encode the data.
@@ -45,10 +44,14 @@ if(empty($errors)){
     
     file_put_contents($storage, $json);
     // File append says do not ovewrite, but add this data to what already exists.
-    $restaurantName = urlencode($restaurantName);
+    $restaurantName = urlencode($_POST['restaurantName']);
     header("Location: input.php?success=true&restaurant=$restaurantName");
 }else{
-    header("Location: input.php?error=true");
+    foreach($errors as $error){
+        $error .= $error;
+    }
+    $error = urlencode($error);
+    header("Location: input.php?error="+$error);
 }
 
 

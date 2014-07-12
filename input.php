@@ -1,4 +1,7 @@
-<?php include_once('includes/header.php'); ?>
+<?php include_once('includes/header.php'); 
+
+
+?>
 
     <body style='padding-top:25px;'>
         <div class="container-fluid">
@@ -6,14 +9,15 @@
                 <?php
                     if(isset($_GET['success'])){
                         $restaurantDecode = urldecode($_GET['restaurant']);
-                        echo "<p class='bg-success' style='padding: 15px 5px'>You have successfully added restaurant $restaurantDecode to the list!</p>"; 
+                        echo "<p class='bg-success' style='padding: 15px 5px;'>You have successfully added restaurant $restaurantDecode to the list!</p>"; 
                     }
                     if(isset($_GET['error'])){
-                        echo "<p class='bg-danger' style='padding: 15px 5px'>No restaurants were added.</p>";
+                        $errorList = urldecode($_GET['error']);
+                        echo "<p class='bg-danger' style='padding: 15px 5px;'>No restaurants were added because $errorList.</p>";
                     }
     
                 ?>
-                <form name="restaurants" id='restaurants' action="#" method="post">
+                <form name="restaurants" id='restaurants' action="process.php" method="post">
                     <label for='restaurantName' class='col-md-6'>Restaurant Name:</label>
                     <input type='text' id='restaurantName' class='col-md-6'
                     required='required' name='restaurantName' placeholder='Restaurant name'
@@ -21,7 +25,7 @@
                     />
                     <label for='rating' class='col-md-6' >Rating:</label>
                     <input type='number' min='0' max='5' class='col-md-6' required='required'
-                    name='rating' id='rating' placeholder='Restaurant rating' 
+                    name='rating' id='rating' placeholder='Numbers only' 
                     value=''
                     />
                     <label for='location' class='col-md-6'>Location:</label>
